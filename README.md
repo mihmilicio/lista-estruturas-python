@@ -1,6 +1,11 @@
 # lista-estruturas-python
 Resolução da lista avaliativa de estruturas de dados em Python, para a disciplina de Tópicos Especiais em Software.
 
+## Antes de executar
+```
+pip install unidecode
+```
+
 ## Exercícios propostos
 
 - Cada exercício deve estar em um arquivo separado com a indicação do exercicio: ex1.py, ex2.py, etc.
