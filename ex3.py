@@ -4,7 +4,9 @@ jogado por meio do terminal, mantendo a lógica do jogo original. Devem aparecer
 já foram descobertas, as letras já tentadas no teclado e assim por diante. Atente-se à
 formatação.
 
-
+A função principal do jogo é a iniciar_jogo() que inicia sorteando uma palavra do arquivo e 
+controla o laço de repetição de tentativas. Os estados das letras são guardados nos 3 sets 
+(letras_nao_existentes, letras_posicao_errada e letras_acertadas) para imprimir as cores no teclado QWERTY.
 
 '''
 import string
@@ -29,6 +31,7 @@ class VitoriaException(BaseException):
   pass
 
 def iniciar_jogo():
+  """Função principal que controla o fluxo do jogo, assim como vitória e derrota. """
   print(colorido("*TERMOOO*", cores['HEADER']))
 
   sortear_palavra()
@@ -52,6 +55,7 @@ def ler_arquivo(arq):
         return [linha.strip() for linha in f] # método strip remove o '\n' do final da linha
 
 def sortear_palavra():
+  """Lê o arquivo de palavras e sorteia uma aleatória"""
   global lista_palavras
   lista_palavras = [ unidecode(palavra) for palavra in ler_arquivo(arquivo) ]
   print(lista_palavras)
@@ -62,6 +66,7 @@ def sortear_palavra():
 
 
 def printar_tentativas():
+  """Imprime a grid do jogo com as tentativas já feitas e os espaços para as próximas"""
   print("\n")
   for i in range(max_tentativas):
     if (len(tentativas) > i):
@@ -71,6 +76,7 @@ def printar_tentativas():
 
 
 def printar_letras_coloridas_palpite(palpite: str):
+  """ Imprime um palpite passado com as letras coloridas para sinalizar os acertos e erros. """
   palavra_processada = palavra
   output = ['-'] * len(palavra)
 
@@ -94,6 +100,7 @@ def printar_letras_coloridas_palpite(palpite: str):
 
 
 def printar_teclado():
+  """ Imprime o teclado QWERTY com as letras coloridas sinalizando os acertos e erros. """
   print("")
   for char in teclado:
     if char in letras_acertadas:
@@ -108,6 +115,7 @@ def printar_teclado():
 
 
 def pedir_palpite():
+  """ Recebe input de palavra do usuário, somente do tamanho compatível com a palavra e existente na lista. """
   while True:
     palpite = input("Digite seu palpite: ").upper()
     
@@ -126,6 +134,7 @@ def pedir_palpite():
     return palpite
 
 def verificar_palpite(palpite: str):
+  """ Verifica os resultados obtidos com o palpite. Levanta a vitória, se necessário, e registra os estados das letras utilizadas. """
   tentativas.append(palpite)
   if (palpite == palavra):
     raise VitoriaException
